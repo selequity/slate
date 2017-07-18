@@ -41,6 +41,10 @@ version.
 We're thinking about maintaining major version in the url, and if
 needed, smaller sub-versions in http headers.
 
+Where possible, we want to avoid using any kind of json envelope. But
+where we have to, it will likely follow some kind of normalized or
+shallow-nested format.
+
 ```json
 {
   apiVersion: 2.0,
