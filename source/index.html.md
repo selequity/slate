@@ -37,21 +37,42 @@ version 2.
 Every request will include information about the url, and the api
 version.
 
+Every json object should say what it is.
+
 We're thinking about maintaining major version in the url, and if
 needed, smaller sub-versions in http headers.
 
-Where possible, we want to avoid using any kind of json envelope. But
-where we have to, it will likely follow some kind of normalized or
-shallow-nested format.
+When returning a singular resource, no envelope is needed.
 
 ```json
 {
+  object: 'investment'
   apiVersion: 2.0,
-  url: '/api/v2/investments'
+  url: '/api/v2/investments',
+  // other investment attributes
 }
 ```
 
+When returning a collection of resources, make the top-level json object
+a list:
+
+```json
+{
+  object 'list',
+  data: [
+    {
+      id: 1,
+      object: 'investment'
+      // other investment attributes
+    }
+  ]
+
+```
+
 ## Error Format
+
+A response should never include any sort of real data, and an errors:
+hash at the same time.
 
 ```json
 {
