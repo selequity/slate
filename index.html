@@ -272,6 +272,10 @@ version.</p>
 
 <p>We&#39;re thinking about maintaining major version in the url, and if
 needed, smaller sub-versions in http headers.</p>
+
+<p>Where possible, we want to avoid using any kind of json envelope. But
+where we have to, it will likely follow some kind of normalized or
+shallow-nested format.</p>
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
   </span><span class="err">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="mf">2.0</span><span class="p">,</span><span class="w">
   </span><span class="err">url</span><span class="p">:</span><span class="w"> </span><span class="err">'/api/v</span><span class="mi">2</span><span class="err">/investments'</span><span class="w">
