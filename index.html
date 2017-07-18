@@ -269,17 +269,35 @@ version 2.</p>
 <p>Every request will include information about the url, and the api
 version.</p>
 
+<p>Every json object should say what it is.</p>
+
 <p>We&#39;re thinking about maintaining major version in the url, and if
 needed, smaller sub-versions in http headers.</p>
 
-<p>Where possible, we want to avoid using any kind of json envelope. But
-where we have to, it will likely follow some kind of normalized or
-shallow-nested format.</p>
+<p>When returning a singular resource, no envelope is needed.</p>
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="err">object</span><span class="p">:</span><span class="w"> </span><span class="err">'investment'</span><span class="w">
   </span><span class="err">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="mf">2.0</span><span class="p">,</span><span class="w">
-  </span><span class="err">url</span><span class="p">:</span><span class="w"> </span><span class="err">'/api/v</span><span class="mi">2</span><span class="err">/investments'</span><span class="w">
+  </span><span class="err">url</span><span class="p">:</span><span class="w"> </span><span class="err">'/api/v</span><span class="mi">2</span><span class="err">/investments'</span><span class="p">,</span><span class="w">
+  </span><span class="err">//</span><span class="w"> </span><span class="err">other</span><span class="w"> </span><span class="err">investment</span><span class="w"> </span><span class="err">attributes</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre><h2 id='error-format'>Error Format</h2><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+</span></code></pre>
+<p>When returning a collection of resources, make the top-level json object
+a list:</p>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="err">object</span><span class="w"> </span><span class="err">'list'</span><span class="p">,</span><span class="w">
+  </span><span class="err">data</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="err">id</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+      </span><span class="err">object</span><span class="p">:</span><span class="w"> </span><span class="err">'investment'</span><span class="w">
+      </span><span class="err">//</span><span class="w"> </span><span class="err">other</span><span class="w"> </span><span class="err">investment</span><span class="w"> </span><span class="err">attributes</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+
+</span></code></pre><h2 id='error-format'>Error Format</h2>
+<p>A response should never include any sort of real data, and an errors:
+hash at the same time.</p>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
   </span><span class="err">type</span><span class="p">:</span><span class="w"> </span><span class="err">'api_error'</span><span class="p">,</span><span class="w">
   </span><span class="err">message</span><span class="p">:</span><span class="w"> </span><span class="err">'human-friendly</span><span class="w"> </span><span class="err">message</span><span class="w"> </span><span class="err">about</span><span class="w"> </span><span class="err">what</span><span class="w"> </span><span class="err">went</span><span class="w"> </span><span class="err">wrong'</span><span class="p">,</span><span class="w">
   </span><span class="err">code</span><span class="p">:</span><span class="w"> </span><span class="mi">500</span><span class="p">,</span><span class="w">
