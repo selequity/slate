@@ -219,22 +219,27 @@
         <ul class="search-results"></ul>
       <div id="toc" class="toc-list-h1">
           <li>
-            <a href="#context" class="toc-h1 toc-link" data-title="Context">Context</a>
+            <a href="#introduction" class="toc-h1 toc-link" data-title="Introduction">Introduction</a>
           </li>
           <li>
-            <a href="#targets" class="toc-h1 toc-link" data-title="Targets">Targets</a>
+            <a href="#authentication" class="toc-h1 toc-link" data-title="Authentication">Authentication</a>
           </li>
           <li>
-            <a href="#starting-points" class="toc-h1 toc-link" data-title="Starting Points">Starting Points</a>
+            <a href="#errors" class="toc-h1 toc-link" data-title="Errors">Errors</a>
               <ul class="toc-list-h2">
                   <li>
-                    <a href="#basic-request-structure" class="toc-h2 toc-link" data-title="Starting Points">Basic Request Structure</a>
+                    <a href="#the-error-object" class="toc-h2 toc-link" data-title="Errors">The error object</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#investments" class="toc-h1 toc-link" data-title="Investments">Investments</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#the-investment-object" class="toc-h2 toc-link" data-title="Investments">The investment object</a>
                   </li>
                   <li>
-                    <a href="#error-format" class="toc-h2 toc-link" data-title="Starting Points">Error Format</a>
-                  </li>
-                  <li>
-                    <a href="#guidelines" class="toc-h2 toc-link" data-title="Starting Points">Guidelines</a>
+                    <a href="#relationships" class="toc-h2 toc-link" data-title="Investments">Relationships</a>
                   </li>
               </ul>
           </li>
@@ -247,83 +252,230 @@
     <div class="page-wrapper">
       <div class="dark-box"></div>
       <div class="content">
-        <h1 id='context'>Context</h1>
-<p>Currently, we&#39;re at version 1 of the Selequity API. The Rails side, and the
-Angular side, are deeply coupled. At some point, we&#39;ll likely want to
-start moving pieces off the Angular app. And we&#39;ll certainly want to
-expand our api to be consumed by other services. There&#39;s no consistent JSON schema
-being served up, and large improvements to be made in logging, error
-handling, and performance.</p>
+        <h1 id='introduction'>Introduction</h1>
+<p>Currently, we&#39;re at version 1 of the Selequity API. Soon, we will likely
+need to integrate with external services, as well as creating greater
+internal consistency. There are several tasks between here and there:</p>
+
+<ul>
+<li>defining a consistent json schema</li>
+<li>documentation around the api</li>
+<li>building out the endpoints</li>
+</ul>
 
 <p>Thus, alongside other refactoring efforts, we&#39;re going to slowly
 convert, piece by piece, resource by resource, the current codebase from
 version 1 to our latest understanding of the domain and use cases in
 version 2.</p>
-<h1 id='targets'>Targets</h1>
-<ul>
-<li>Build out a style guide &amp; useful documentation here</li>
-<li>Make responses as flat/normalized as possible</li>
-<li>Where possible, copy <a href="https://stripe.com/docs/api">Stripe&#39;s</a> api</li>
-</ul>
-<h1 id='starting-points'>Starting Points</h1><h2 id='basic-request-structure'>Basic Request Structure</h2>
-<p>Every request will include information about the url, and the api
-version.</p>
 
-<p>Every json object should say what it is.</p>
+<p>This API follows the <a href="http://jsonapi.org/">json api</a> specification.</p>
+<h1 id='authentication'>Authentication</h1>
+<p>This api is currently only available from inside the app itself,
+although we will certainly be opening it up later. This documentation is
+in preparation for that point.</p>
+<h1 id='errors'>Errors</h1>
+<p>Selequity uses conventional HTTP response codes to indicate the success or failure of an API request. In general, codes in the 2xx range indicate success, codes in the 4xx range indicate an error that failed given the information provided (e.g., a required parameter was omitted, a charge failed, etc.), and codes in the 5xx range indicate an error with Selequity&#39;s servers (these are rare).</p>
 
-<p>We&#39;re thinking about maintaining major version in the url, and if
-needed, smaller sub-versions in http headers.</p>
+<p>Generally, responses will only contain one error, but in some cases
+(such as complex validations) there might be many errors. Generally, the
+HTTP response code will match the errors, but in cases where that&#39;s not
+true, we need to make sure to document them here.</p>
 
-<p>When returning a singular resource, no envelope is needed.</p>
-<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-  </span><span class="err">object</span><span class="p">:</span><span class="w"> </span><span class="err">'investment'</span><span class="w">
-  </span><span class="err">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="mf">2.0</span><span class="p">,</span><span class="w">
-  </span><span class="err">url</span><span class="p">:</span><span class="w"> </span><span class="err">'/api/v</span><span class="mi">2</span><span class="err">/investments'</span><span class="p">,</span><span class="w">
-  </span><span class="err">//</span><span class="w"> </span><span class="err">other</span><span class="w"> </span><span class="err">investment</span><span class="w"> </span><span class="err">attributes</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre>
-<p>When returning a collection of resources, make the top-level json object
-a list:</p>
-<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-  </span><span class="err">object</span><span class="w"> </span><span class="err">'list'</span><span class="p">,</span><span class="w">
-  </span><span class="err">data</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+<table><thead>
+<tr>
+<th>Error Code</th>
+<th>Meaning</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>400</td>
+<td>Bad Request -- The request was unacceptable, often due to missing a required parameter.</td>
+</tr>
+<tr>
+<td>401</td>
+<td>Unauthorized -- No valid API key provided.</td>
+</tr>
+<tr>
+<td>402</td>
+<td>Request Failed -- The parameters were valid but the request failed.</td>
+</tr>
+<tr>
+<td>404</td>
+<td>Not Found -- The requested resource doesn&#39;t exist.</td>
+</tr>
+<tr>
+<td>429</td>
+<td>Too Many Requests -- Too many requests hit the API too quickly.</td>
+</tr>
+<tr>
+<td>500, 502, 503, 504</td>
+<td>Internal Server Error -- We had a problem with our server. Try again later.</td>
+</tr>
+</tbody></table>
+<h2 id='the-error-object'>The error object</h2>
+<p>FIELDS</p>
+<pre class="highlight json tab-json"><code><span class="err">//</span><span class="w"> </span><span class="err">HTTP</span><span class="w"> </span><span class="mi">422</span><span class="w">
+</span><span class="p">{</span><span class="w">
+  </span><span class="s2">"errors"</span><span class="p">:[</span><span class="w">
     </span><span class="p">{</span><span class="w">
-      </span><span class="err">id</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
-      </span><span class="err">object</span><span class="p">:</span><span class="w"> </span><span class="err">'investment'</span><span class="w">
-      </span><span class="err">//</span><span class="w"> </span><span class="err">other</span><span class="w"> </span><span class="err">investment</span><span class="w"> </span><span class="err">attributes</span><span class="w">
+      </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="mi">422</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"RecordInvalid"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Record Invalid"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"detail"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Minimum investment cannot exceed maximum investment."</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"parameter"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"investments"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">]</span><span class="w">
     </span><span class="p">}</span><span class="w">
   </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>A response will never contain both a data key and an errors key.</p>
 
-</span></code></pre><h2 id='error-format'>Error Format</h2>
-<p>A response should never include any sort of real data, and an errors:
-hash at the same time.</p>
-<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-  </span><span class="err">type</span><span class="p">:</span><span class="w"> </span><span class="err">'api_error'</span><span class="p">,</span><span class="w">
-  </span><span class="err">message</span><span class="p">:</span><span class="w"> </span><span class="err">'human-friendly</span><span class="w"> </span><span class="err">message</span><span class="w"> </span><span class="err">about</span><span class="w"> </span><span class="err">what</span><span class="w"> </span><span class="err">went</span><span class="w"> </span><span class="err">wrong'</span><span class="p">,</span><span class="w">
-  </span><span class="err">code</span><span class="p">:</span><span class="w"> </span><span class="mi">500</span><span class="p">,</span><span class="w">
-  </span><span class="err">param</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="err">relevant</span><span class="p">:</span><span class="w"> </span><span class="err">'id'</span><span class="w">
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>status</td>
+<td>integer</td>
+<td>the HTTP status code applicable to this problem, expressed as a string value.</td>
+</tr>
+<tr>
+<td>code</td>
+<td>string</td>
+<td>an application-specific error code, expressed as a string value.</td>
+</tr>
+<tr>
+<td>title</td>
+<td>string</td>
+<td>a short, human-readable summary of the problem that SHOULD NOT change from occurrence to occurrence of the problem, except for purposes of localization.</td>
+</tr>
+<tr>
+<td>detail</td>
+<td>string</td>
+<td>a human-readable explanation specific to this occurrence of the problem. Like title, this field’s value can be localized.</td>
+</tr>
+<tr>
+<td>parameter</td>
+<td>string</td>
+<td>extra information about any relevant parameters</td>
+</tr>
+<tr>
+<td>meta</td>
+<td>string</td>
+<td>a meta object containing non-standard meta-information about the error.</td>
+</tr>
+</tbody></table>
+<h1 id='investments'>Investments</h1>
+<p>Investments are how deals get funded. Each investment can have a variety
+of concurrent processes running on it at the same time.</p>
+<h2 id='the-investment-object'>The investment object</h2><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"25"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"investments"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"attributes"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"user_id"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"deal_id"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"workflow_state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"complete"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"amount"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2017-04-12T13:27:18.317Z"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2017-04-12T13:27:18.317Z"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"accredify_token"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"accreditation_id"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"deal_terms"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"documents_understood"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"titled"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Charles George III"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"completed_on"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"will_be_rejected"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"pre_reject_state"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"fa_investment_id"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"fa_investor_id"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"accreditation_subtype"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"project_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"suitability_document_id"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"investment_document_id"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"address_id"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"phone"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"investor_type"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"suitability_response_document_id"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"is_fully_accredited"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"vi_identifier"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"vi_user_id"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"vi_verification_request_id"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"vi_investor_url"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"vi_verification_status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"unverified"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="s2">"relationships"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"deal"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"data"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="s2">"address"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"data"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+    </span><span class="p">}</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre><h2 id='guidelines'>Guidelines</h2>
-<p>More advanced queries on a specific resource will use query parameters.</p>
+</span></code></pre>
+<p>FIELDS</p>
 
-<p>Ex: <code>/api/v2/investments?status=active</code></p>
-
-<p>Each endpoint will, by default, give back the minimal info needed. To
-request additional info, include fields:</p>
-
-<p><code>/api/v2/investments?fields=all</code></p>
-
-<p>If there&#39;s a commonly requested configuration of query parameters on a
-resource, chances are we&#39;ll have a restful alias.</p>
-
-<p><code>/api/v2/deals/recently_funded</code></p>
-
-<p>If you want the response to include other associated records, use the
-include parameter:</p>
-
-<p><code>/api/v2/investments?include=deal</code></p>
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>id</td>
+<td>integer</td>
+<td>Unique identifier for the object.</td>
+</tr>
+<tr>
+<td>type</td>
+<td>string</td>
+<td>String representing the object&#39;s type. Objects of the same type share the same value.</td>
+</tr>
+<tr>
+<td>titled</td>
+<td>string</td>
+<td>String representing what specific investment vehicle owns this investment.</td>
+</tr>
+<tr>
+<td>amount</td>
+<td>positive integer</td>
+<td>A positive integer representing how much this investment will supply.</td>
+</tr>
+<tr>
+<td>created_at</td>
+<td>timestamp</td>
+<td>Time at which the object was created. Stored in ISO8601, and transmitted in UTC.</td>
+</tr>
+<tr>
+<td>completed_on</td>
+<td>timestamp</td>
+<td>Time at which the investment was completed. Stored in ISO8601, and transmitted in UTC.</td>
+</tr>
+</tbody></table>
+<h2 id='relationships'>Relationships</h2>
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Relationship</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Processes</td>
+<td>An investment can have a variety of concurrent processes which need to be fulfilled on it.</td>
+</tr>
+<tr>
+<td>Tasks</td>
+<td>An investment can have a variety of tasks, through processes.</td>
+</tr>
+</tbody></table>
 
       </div>
       <div class="dark-box">
