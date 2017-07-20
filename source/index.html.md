@@ -8,6 +8,9 @@ toc_footers:
   - <a href='#'>Example Link</a>
   - <a href='https://github.com/tripit/slate'>Documentation Powered by Slate</a>
 
+includes:
+  - investments
+
 search: true
 ---
 # Context
