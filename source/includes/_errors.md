@@ -1,20 +1,54 @@
 # Errors
 
-<aside class="notice">This error section is stored in a separate file in `includes/_errors.md`. Slate allows you to optionally separate out your docs into many files...just save them to the `includes` folder and add them to the top of your `index.md`'s frontmatter. Files are included in the order listed.</aside>
+Selequity uses conventional HTTP response codes to indicate the success or failure of an API request. In general, codes in the 2xx range indicate success, codes in the 4xx range indicate an error that failed given the information provided (e.g., a required parameter was omitted, a charge failed, etc.), and codes in the 5xx range indicate an error with Selequity's servers (these are rare).
 
-The Kittn API uses the following error codes:
-
+Generally, responses will only contain one error, but in some cases
+(such as complex validations) there might be many errors. Generally, the
+HTTP response code will match the errors, but in cases where that's not
+true, we need to make sure to document them here.
 
 Error Code | Meaning
 ---------- | -------
-400 | Bad Request -- Your request sucks
-401 | Unauthorized -- Your API key is wrong
-403 | Forbidden -- The kitten requested is hidden for administrators only
-404 | Not Found -- The specified kitten could not be found
-405 | Method Not Allowed -- You tried to access a kitten with an invalid method
-406 | Not Acceptable -- You requested a format that isn't json
-410 | Gone -- The kitten requested has been removed from our servers
-418 | I'm a teapot
-429 | Too Many Requests -- You're requesting too many kittens! Slow down!
-500 | Internal Server Error -- We had a problem with our server. Try again later.
-503 | Service Unavailable -- We're temporarily offline for maintenance. Please try again later.
+400 | Bad Request -- The request was unacceptable, often due to missing a required parameter.
+401 | Unauthorized -- No valid API key provided.
+402 | Request Failed -- The parameters were valid but the request failed.
+404 | Not Found -- The requested resource doesn't exist.
+429 | Too Many Requests -- Too many requests hit the API too quickly.
+500, 502, 503, 504 | Internal Server Error -- We had a problem with our server. Try again later.
+
+
+## The error object
+
+
+FIELDS
+
+```json
+// HTTP 422
+{
+  "errors":[
+    {
+      "status": 422,
+      "code": "RecordInvalid",
+      "title": "Record Invalid",
+      "detail": "Minimum investment cannot exceed maximum investment.",
+      "parameter": [
+        {
+          "id": 3,
+          "type": "investments"
+        }
+      ]
+    }
+  ]
+}
+```
+
+A response will never contain both a data key and an errors key.
+
+Name | Type | Description
+---- | ---- | -----------
+status | integer | the HTTP status code applicable to this problem, expressed as a string value.
+code | string | an application-specific error code, expressed as a string value.
+title | string | a short, human-readable summary of the problem that SHOULD NOT change from occurrence to occurrence of the problem, except for purposes of localization.
+detail | string | a human-readable explanation specific to this occurrence of the problem. Like title, this field’s value can be localized.
+parameter | string | extra information about any relevant parameters
+meta | string | a meta object containing non-standard meta-information about the error.

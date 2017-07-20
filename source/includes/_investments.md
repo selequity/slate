@@ -66,3 +66,5 @@ completed_on | timestamp | Time at which the investment was completed. Stored in
 
 Name | Relationship
 ---- | ------------
+Processes | An investment can have a variety of concurrent processes which need to be fulfilled on it.
+Tasks | An investment can have a variety of tasks, through processes.
