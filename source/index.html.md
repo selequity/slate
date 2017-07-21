@@ -3,6 +3,7 @@ title: API Reference
 
 language_tabs: # must be one of https://git.io/vQNgJ
   - json
+  - ruby
 
 toc_footers:
   - <a href='#'>Example Link</a>
@@ -12,6 +13,7 @@ includes:
   - authentication
   - errors
   - investments
+  - developer_reference
 
 search: true
 ---
