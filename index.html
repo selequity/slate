@@ -497,23 +497,17 @@ of concurrent processes running on it at the same time.</p>
 <h1 id='developer-reference'>Developer Reference</h1>
 <p>Here&#39;s a collection of things that are not well documented, and
 workaround we&#39;ll have to adopt in our current system for the time being.</p>
-<h2 id='using-the-right-serializer-amp-adapter'>Using the right serializer &amp; adapter</h2><pre class="highlight ruby tab-ruby"><code><span class="c1"># app/serializers/v2/base_serializer</span>
-
-<span class="k">class</span> <span class="nc">V2</span><span class="o">::</span><span class="no">BaseSerializer</span> <span class="o">&lt;</span> <span class="no">ActiveModel</span><span class="o">::</span><span class="no">Serializer</span>
-  <span class="no">ActiveModelSerializers</span><span class="p">.</span><span class="nf">config</span><span class="p">.</span><span class="nf">tap</span> <span class="k">do</span> <span class="o">|</span><span class="n">configuration</span><span class="o">|</span>
-    <span class="n">configuration</span><span class="p">.</span><span class="nf">adapter</span> <span class="o">=</span> <span class="ss">:json_api</span>
-    <span class="n">configuration</span><span class="p">.</span><span class="nf">key_transform</span> <span class="o">=</span> <span class="ss">:underscore</span>
-  <span class="k">end</span>
-<span class="k">end</span>
-</code></pre>
+<h2 id='using-the-right-serializer-amp-adapter'>Using the right serializer &amp; adapter</h2>
 <p>Active Model Serializers have 3 available adapter. Attributes (default),
 json, and json api. Since we&#39;re adhering to the json api spec, we want
-to use the :json_api adapter. Since v1 used a different adapter, we&#39;re
-setting v2 as the default inside the app/serializers/v2 directory only.</p>
-<pre class="highlight ruby tab-ruby"><code><span class="n">render</span> <span class="ss">json: </span><span class="vi">@investments</span><span class="p">,</span> <span class="ss">each_serializer: </span><span class="o">::</span><span class="no">V2</span><span class="o">::</span><span class="no">InvestmentsSerializer</span>
+to use the :json_api adapter.</p>
+
+<p>Unfortunately, there&#39;s no way to configure this in a non-global way, so
+we&#39;ll have to pass it in as an option everywhere we want to use it.</p>
+<pre class="highlight ruby tab-ruby"><code><span class="n">render</span> <span class="ss">json: </span><span class="vi">@investments</span><span class="p">,</span> <span class="ss">each_serializer: </span><span class="o">::</span><span class="no">V2</span><span class="o">::</span><span class="no">InvestmentsSerializer</span><span class="p">,</span> <span class="ss">adapter: :json_api</span>
 </code></pre>
 <p>For the time being, we&#39;ll need to explicity pass in the v2 serializers.</p>
-<h2 id='limiting-what-fields-are-sent-back'>Limiting what fields are sent back</h2><pre class="highlight ruby tab-ruby"><code><span class="n">render</span> <span class="ss">json: </span><span class="vi">@investments</span><span class="p">,</span> <span class="ss">each_serializer: </span><span class="o">::</span><span class="no">V2</span><span class="o">::</span><span class="no">InvestmentsSerializer</span><span class="p">,</span> <span class="ss">fields: </span><span class="p">{</span> <span class="ss">investments: </span><span class="p">[</span><span class="ss">:titled</span><span class="p">,</span> <span class="ss">:created_at</span><span class="p">]}</span>
+<h2 id='limiting-what-fields-are-sent-back'>Limiting what fields are sent back</h2><pre class="highlight ruby tab-ruby"><code><span class="n">render</span> <span class="ss">json: </span><span class="vi">@investments</span><span class="p">,</span> <span class="ss">each_serializer: </span><span class="o">::</span><span class="no">V2</span><span class="o">::</span><span class="no">InvestmentsSerializer</span><span class="p">,</span> <span class="ss">adapter: :json_api</span><span class="p">,</span> <span class="ss">fields: </span><span class="p">{</span> <span class="ss">investments: </span><span class="p">[</span><span class="ss">:titled</span><span class="p">,</span> <span class="ss">:created_at</span><span class="p">]}</span>
 </code></pre>
 <p>There&#39;s only one important condition here.</p>
 
