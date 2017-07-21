@@ -5,24 +5,15 @@ workaround we'll have to adopt in our current system for the time being.
 
 ## Using the right serializer & adapter
 
-```ruby
-# app/serializers/v2/base_serializer
-
-class V2::BaseSerializer < ActiveModel::Serializer
-  ActiveModelSerializers.config.tap do |configuration|
-    configuration.adapter = :json_api
-    configuration.key_transform = :underscore
-  end
-end
-```
-
 Active Model Serializers have 3 available adapter. Attributes (default),
 json, and json api. Since we're adhering to the json api spec, we want
-to use the :json_api adapter. Since v1 used a different adapter, we're
-setting v2 as the default inside the app/serializers/v2 directory only.
+to use the :json_api adapter.
+
+Unfortunately, there's no way to configure this in a non-global way, so
+we'll have to pass it in as an option everywhere we want to use it.
 
 ```ruby
-render json: @investments, each_serializer: ::V2::InvestmentsSerializer
+render json: @investments, each_serializer: ::V2::InvestmentsSerializer, adapter: :json_api
 ```
 
 For the time being, we'll need to explicity pass in the v2 serializers.
@@ -30,7 +21,7 @@ For the time being, we'll need to explicity pass in the v2 serializers.
 ## Limiting what fields are sent back
 
 ```ruby
-render json: @investments, each_serializer: ::V2::InvestmentsSerializer, fields: { investments: [:titled, :created_at]}
+render json: @investments, each_serializer: ::V2::InvestmentsSerializer, adapter: :json_api, fields: { investments: [:titled, :created_at]}
 ```
 
 There's only one important condition here.
