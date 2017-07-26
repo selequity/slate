@@ -90,7 +90,7 @@ circumstances they might have dependencies upon each other.
 Example: Before a sponsor can countersign, the investor's advisor must sign off on the suitability of the investment.
 </aside>
 
-Additionally, processes can potentially be different from investent to
+Additionally, processes can potentially be different from investment to
 investment inside the same deal.
 
 <aside class="notice">
