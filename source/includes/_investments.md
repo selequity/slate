@@ -3,7 +3,7 @@
 Investments are how deals get funded. Each investment can have a variety
 of concurrent processes running on it at the same time.
 
-## The investment object
+## Attributes
 ```json
 {
   "id": "25",
@@ -62,7 +62,14 @@ amount | positive integer | A positive integer representing how much this invest
 created_at | timestamp | Time at which the object was created. Stored in ISO8601, and transmitted in UTC.
 completed_on | timestamp | Time at which the investment was completed. Stored in ISO8601, and transmitted in UTC.
 
-### Investment Processes
+## Relationships
+
+Name | Relationship
+---- | ------------
+Processes | An investment can have a variety of concurrent processes which need to be fulfilled on it.
+Tasks | An investment can have a variety of tasks, through processes.
+
+## Status
 
 For an investment in a deal to go through, a variety of things have to
 happen.
@@ -91,9 +98,14 @@ might need to take an action. When this is the case, the investment will
 produce **notifications**, or prompts that get sent up to users which
 help them advance through the processes by completing the relevant task.
 
-## Relationships
+### Process
 
-Name | Relationship
----- | ------------
-Processes | An investment can have a variety of concurrent processes which need to be fulfilled on it.
-Tasks | An investment can have a variety of tasks, through processes.
+### Process Template
+
+### Process Category
+
+### Tasks
+
+### Notifications
+
+### Process Options

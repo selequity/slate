@@ -58,7 +58,7 @@ html, body {
   bottom: 0;
   width: $nav-width;
   background-color: $nav-bg;
-  font-size: 13px;
+  font-size: 18px;
   font-weight: bold;
 
   // language selector for mobile devices
@@ -151,6 +151,7 @@ html, body {
     transition-property: background;
     transition-timing-function: linear;
     transition-duration: 200ms;
+    line-height: 40px;
   }
 
   // This is the currently selected ToC entry
@@ -173,7 +174,7 @@ html, body {
 
   .toc-h2 {
     padding-left: $nav-padding + $nav-indent;
-    font-size: 12px;
+    font-size: 15px;
   }
 
   .toc-list-h3 {
@@ -183,7 +184,7 @@ html, body {
 
   .toc-h3 {
     padding-left: $nav-padding + $nav-indent + $nav-indent;
-    font-size: 10px;
+    font-size: 15px;
   }
 
   .toc-footer {
@@ -215,7 +216,7 @@ html, body {
   white-space: nowrap;
   text-overflow: ellipsis;
   text-decoration: none;
-  color: #fff;
+  color: #099AD2;
   transition-property: background;
   transition-timing-function: linear;
   transition-duration: 130ms;
@@ -363,8 +364,6 @@ html, body {
     padding-bottom: 0.5em;
     margin-bottom: $h1-margin-bottom;
     margin-top: 2em;
-    border-top: 1px solid #ccc;
-    border-bottom: 1px solid #ccc;
     background-color: #fdfdfd;
   }
 
@@ -378,7 +377,6 @@ html, body {
     font-size: 19px;
     margin-top: 4em;
     margin-bottom: 0;
-    border-top: 1px solid #ccc;
     padding-top: 1.2em;
     padding-bottom: 1.2em;
     background-image: linear-gradient(to bottom, rgba(#fff, 0.2), rgba(#fff, 0));
