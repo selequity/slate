@@ -106,14 +106,43 @@ To track and record where a given process is at, each **process** has an ordered
 A **notification** is produced when, in order for a **task** to be
 completed, a user must take action.
 
-### Process
+### Process Category
+If multiple processes can all address the same underlying need, then
+they belong to the same category. Currently, we support 4 different
+categories:
+
+Category | Description
+---- | ------------
+Accreditation | Verifying the investor is accredited.
+Subscription | Subscription documents between the two parties must be signed.
+Suitability | Suitability documents that must be signed & approved by the investor's advisor
+Escrow | Money must go into escrow.
+
+
+Name | param | Relationship
+---- | ----- | ------------
+Templates | template | What templates belong to this category.
+
 
 ### Process Template
+A real-world sequence of events which take place around an investment.
+This stores information about a process that applies to all investments.
 
-### Process Category
+**Relationships:**
 
-### Tasks
+Name | Relationship
+---- | ------------
+Category | What underlying category this process template applies to.
 
-### Notifications
+### Process
+A real-world sequence of events which take place around an investment.
+This stores information about a process that's specific to a particular
+investment.
 
-### Process Options
+### Task
+An individual thing that must be done, either by a person, or by the system, in order for the process to advance. (Ex: Investor Signing the subscription documents).
+
+### Notification
+An actual notice sent up to a user either informing them of where a process is at, or prompting them to do something to advance a process.
+
+### Process Option
