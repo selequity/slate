@@ -237,10 +237,33 @@
             <a href="#investments" class="toc-h1 toc-link" data-title="Investments">Investments</a>
               <ul class="toc-list-h2">
                   <li>
-                    <a href="#the-investment-object" class="toc-h2 toc-link" data-title="Investments">The investment object</a>
+                    <a href="#attributes" class="toc-h2 toc-link" data-title="Investments">Attributes</a>
                   </li>
                   <li>
                     <a href="#relationships" class="toc-h2 toc-link" data-title="Investments">Relationships</a>
+                  </li>
+                  <li>
+                    <a href="#status" class="toc-h2 toc-link" data-title="Investments">Status</a>
+                      <ul class="toc-list-h3">
+                          <li>
+                            <a href="#process" class="toc-h3 toc-link" data-title="Investments">Process</a>
+                          </li>
+                          <li>
+                            <a href="#process-template" class="toc-h3 toc-link" data-title="Investments">Process Template</a>
+                          </li>
+                          <li>
+                            <a href="#process-category" class="toc-h3 toc-link" data-title="Investments">Process Category</a>
+                          </li>
+                          <li>
+                            <a href="#tasks" class="toc-h3 toc-link" data-title="Investments">Tasks</a>
+                          </li>
+                          <li>
+                            <a href="#notifications" class="toc-h3 toc-link" data-title="Investments">Notifications</a>
+                          </li>
+                          <li>
+                            <a href="#process-options" class="toc-h3 toc-link" data-title="Investments">Process Options</a>
+                          </li>
+                      </ul>
                   </li>
               </ul>
           </li>
@@ -393,7 +416,7 @@ true, we need to make sure to document them here.</p>
 <h1 id='investments'>Investments</h1>
 <p>Investments are how deals get funded. Each investment can have a variety
 of concurrent processes running on it at the same time.</p>
-<h2 id='the-investment-object'>The investment object</h2><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+<h2 id='attributes'>Attributes</h2><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
   </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"25"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"investments"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"attributes"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
@@ -494,7 +517,38 @@ of concurrent processes running on it at the same time.</p>
 <td>An investment can have a variety of tasks, through processes.</td>
 </tr>
 </tbody></table>
-<h1 id='developer-reference'>Developer Reference</h1>
+<h2 id='status'>Status</h2>
+<p>For an investment in a deal to go through, a variety of things have to
+happen.</p>
+
+<ul>
+<li>The investor must have current/valid accreditation</li>
+<li>Subscription documents between the two parties must be signed</li>
+<li>(Potentially) Suitability documents must be signed &amp; approved by the
+investor&#39;s advisor</li>
+<li>(Potentially) Money must go into escrow</li>
+<li>etc</li>
+</ul>
+
+<p>All these processes need to be able to run concurrently, but in certain
+circumstances they might have dependencies upon each other.</p>
+
+<ul>
+<li>Before subscription documents can be countersigned, the investor&#39;s
+advisor must sign off on the suitability of the investment.</li>
+</ul>
+
+<p>In order to manage this process, an investment can have a variety of
+<strong>processes</strong> required for successful completion.</p>
+
+<p>Each <strong>process</strong> manages an ordered list of <strong>tasks</strong>, which track and
+record where a given process is at.</p>
+
+<p>In order to advance through a <strong>process</strong> for an investment, someone
+might need to take an action. When this is the case, the investment will
+produce <strong>notifications</strong>, or prompts that get sent up to users which
+help them advance through the processes by completing the relevant task.</p>
+<h3 id='process'>Process</h3><h3 id='process-template'>Process Template</h3><h3 id='process-category'>Process Category</h3><h3 id='tasks'>Tasks</h3><h3 id='notifications'>Notifications</h3><h3 id='process-options'>Process Options</h3><h1 id='developer-reference'>Developer Reference</h1>
 <p>Here&#39;s a collection of things that are not well documented, and
 workaround we&#39;ll have to adopt in our current system for the time being.</p>
 <h2 id='using-the-right-serializer-amp-adapter'>Using the right serializer &amp; adapter</h2>
