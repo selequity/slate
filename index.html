@@ -285,10 +285,6 @@
               </ul>
           </li>
       </div>
-        <ul class="toc-footer">
-            <li><a href='#'>Example Link</a></li>
-            <li><a href='https://github.com/tripit/slate'>Documentation Powered by Slate</a></li>
-        </ul>
     </div>
     <div class="page-wrapper">
       <div class="dark-box"></div>
@@ -518,36 +514,60 @@ of concurrent processes running on it at the same time.</p>
 </tr>
 </tbody></table>
 <h2 id='status'>Status</h2>
-<p>For an investment in a deal to go through, a variety of things have to
-happen.</p>
+<p>When an investment is underway, there are a variety of processes across
+different areas that need to happen before the investment can
+successfully be included in part of the deal.</p>
 
-<ul>
-<li>The investor must have current/valid accreditation</li>
-<li>Subscription documents between the two parties must be signed</li>
-<li>(Potentially) Suitability documents must be signed &amp; approved by the
-investor&#39;s advisor</li>
-<li>(Potentially) Money must go into escrow</li>
-<li>etc</li>
-</ul>
+<table><thead>
+<tr>
+<th>Category</th>
+<th>Situation</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Accreditation</td>
+<td>The investor must have current/valid accreditation</td>
+</tr>
+<tr>
+<td>Subscription</td>
+<td>Subscription documents between the two parties must be signed</td>
+</tr>
+<tr>
+<td>Suitability</td>
+<td>(Potentially) Suitability documents must be signed &amp; approved by the investor&#39;s advisor</td>
+</tr>
+<tr>
+<td>Escrow</td>
+<td>(Potentially) Money must go into escrow</td>
+</tr>
+<tr>
+<td>Other</td>
+<td>Etc</td>
+</tr>
+</tbody></table>
 
 <p>All these processes need to be able to run concurrently, but in certain
 circumstances they might have dependencies upon each other.</p>
 
-<ul>
-<li>Before subscription documents can be countersigned, the investor&#39;s
-advisor must sign off on the suitability of the investment.</li>
-</ul>
+<aside class="notice">
+Example: Before a sponsor can countersign, the investor's advisor must sign off on the suitability of the investment.
+</aside>
 
-<p>In order to manage this process, an investment can have a variety of
-<strong>processes</strong> required for successful completion.</p>
+<p>Additionally, processes can potentially be different from investent to
+investment inside the same deal.</p>
 
-<p>Each <strong>process</strong> manages an ordered list of <strong>tasks</strong>, which track and
-record where a given process is at.</p>
+<aside class="notice">
+Example: One investment uses Verify Investor to confirm the investor is
+accredited. Another might already know the investor is accredited and
+not need this process.
+</aside>
 
-<p>In order to advance through a <strong>process</strong> for an investment, someone
-might need to take an action. When this is the case, the investment will
-produce <strong>notifications</strong>, or prompts that get sent up to users which
-help them advance through the processes by completing the relevant task.</p>
+<p>An investment can have a variety of <strong>processes</strong> required for successful completion.</p>
+
+<p>To track and record where a given process is at, each <strong>process</strong> has an ordered list of <strong>tasks</strong>.</p>
+
+<p>A <strong>notification</strong> is produced when, in order for a <strong>task</strong> to be
+completed, a user must take action.</p>
 <h3 id='process'>Process</h3><h3 id='process-template'>Process Template</h3><h3 id='process-category'>Process Category</h3><h3 id='tasks'>Tasks</h3><h3 id='notifications'>Notifications</h3><h3 id='process-options'>Process Options</h3><h1 id='developer-reference'>Developer Reference</h1>
 <p>Here&#39;s a collection of things that are not well documented, and
 workaround we&#39;ll have to adopt in our current system for the time being.</p>
