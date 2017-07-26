@@ -71,32 +71,40 @@ Tasks | An investment can have a variety of tasks, through processes.
 
 ## Status
 
-For an investment in a deal to go through, a variety of things have to
-happen.
+When an investment is underway, there are a variety of processes across
+different areas that need to happen before the investment can
+successfully be included in part of the deal.
 
-  * The investor must have current/valid accreditation
-  * Subscription documents between the two parties must be signed
-  * (Potentially) Suitability documents must be signed & approved by the
-    investor's advisor
-  * (Potentially) Money must go into escrow
-  * etc
+Category | Situation
+---- | ------------
+Accreditation | The investor must have current/valid accreditation
+Subscription | Subscription documents between the two parties must be signed
+Suitability | (Potentially) Suitability documents must be signed & approved by the investor's advisor
+Escrow | (Potentially) Money must go into escrow
+Other | Etc
 
 All these processes need to be able to run concurrently, but in certain
 circumstances they might have dependencies upon each other.
 
-  * Before subscription documents can be countersigned, the investor's
-    advisor must sign off on the suitability of the investment.
+<aside class="notice">
+Example: Before a sponsor can countersign, the investor's advisor must sign off on the suitability of the investment.
+</aside>
 
-In order to manage this process, an investment can have a variety of
-**processes** required for successful completion.
+Additionally, processes can potentially be different from investent to
+investment inside the same deal.
 
-Each **process** manages an ordered list of **tasks**, which track and
-record where a given process is at.
+<aside class="notice">
+Example: One investment uses Verify Investor to confirm the investor is
+accredited. Another might already know the investor is accredited and
+not need this process.
+</aside>
 
-In order to advance through a **process** for an investment, someone
-might need to take an action. When this is the case, the investment will
-produce **notifications**, or prompts that get sent up to users which
-help them advance through the processes by completing the relevant task.
+An investment can have a variety of **processes** required for successful completion.
+
+To track and record where a given process is at, each **process** has an ordered list of **tasks**.
+
+A **notification** is produced when, in order for a **task** to be
+completed, a user must take action.
 
 ### Process
 

@@ -5,10 +5,6 @@ language_tabs: # must be one of https://git.io/vQNgJ
   - json
   - ruby
 
-toc_footers:
-  - <a href='#'>Example Link</a>
-  - <a href='https://github.com/tripit/slate'>Documentation Powered by Slate</a>
-
 includes:
   - authentication
   - errors
