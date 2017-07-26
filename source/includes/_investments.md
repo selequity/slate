@@ -62,6 +62,35 @@ amount | positive integer | A positive integer representing how much this invest
 created_at | timestamp | Time at which the object was created. Stored in ISO8601, and transmitted in UTC.
 completed_on | timestamp | Time at which the investment was completed. Stored in ISO8601, and transmitted in UTC.
 
+### Investment Processes
+
+For an investment in a deal to go through, a variety of things have to
+happen.
+
+  * The investor must have current/valid accreditation
+  * Subscription documents between the two parties must be signed
+  * (Potentially) Suitability documents must be signed & approved by the
+    investor's advisor
+  * (Potentially) Money must go into escrow
+  * etc
+
+All these processes need to be able to run concurrently, but in certain
+circumstances they might have dependencies upon each other.
+
+  * Before subscription documents can be countersigned, the investor's
+    advisor must sign off on the suitability of the investment.
+
+In order to manage this process, an investment can have a variety of
+**processes** required for successful completion.
+
+Each **process** manages an ordered list of **tasks**, which track and
+record where a given process is at.
+
+In order to advance through a **process** for an investment, someone
+might need to take an action. When this is the case, the investment will
+produce **notifications**, or prompts that get sent up to users which
+help them advance through the processes by completing the relevant task.
+
 ## Relationships
 
 Name | Relationship
