@@ -246,22 +246,22 @@
                     <a href="#status" class="toc-h2 toc-link" data-title="Investments">Status</a>
                       <ul class="toc-list-h3">
                           <li>
-                            <a href="#process" class="toc-h3 toc-link" data-title="Investments">Process</a>
+                            <a href="#process-category" class="toc-h3 toc-link" data-title="Investments">Process Category</a>
                           </li>
                           <li>
                             <a href="#process-template" class="toc-h3 toc-link" data-title="Investments">Process Template</a>
                           </li>
                           <li>
-                            <a href="#process-category" class="toc-h3 toc-link" data-title="Investments">Process Category</a>
+                            <a href="#process" class="toc-h3 toc-link" data-title="Investments">Process</a>
                           </li>
                           <li>
-                            <a href="#tasks" class="toc-h3 toc-link" data-title="Investments">Tasks</a>
+                            <a href="#task" class="toc-h3 toc-link" data-title="Investments">Task</a>
                           </li>
                           <li>
-                            <a href="#notifications" class="toc-h3 toc-link" data-title="Investments">Notifications</a>
+                            <a href="#notification" class="toc-h3 toc-link" data-title="Investments">Notification</a>
                           </li>
                           <li>
-                            <a href="#process-options" class="toc-h3 toc-link" data-title="Investments">Process Options</a>
+                            <a href="#process-option" class="toc-h3 toc-link" data-title="Investments">Process Option</a>
                           </li>
                       </ul>
                   </li>
@@ -568,7 +568,74 @@ not need this process.
 
 <p>A <strong>notification</strong> is produced when, in order for a <strong>task</strong> to be
 completed, a user must take action.</p>
-<h3 id='process'>Process</h3><h3 id='process-template'>Process Template</h3><h3 id='process-category'>Process Category</h3><h3 id='tasks'>Tasks</h3><h3 id='notifications'>Notifications</h3><h3 id='process-options'>Process Options</h3><h1 id='developer-reference'>Developer Reference</h1>
+<h3 id='process-category'>Process Category</h3>
+<p>If multiple processes can all address the same underlying need, then
+they belong to the same category. Currently, we support 4 different
+categories:</p>
+
+<table><thead>
+<tr>
+<th>Category</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Accreditation</td>
+<td>Verifying the investor is accredited.</td>
+</tr>
+<tr>
+<td>Subscription</td>
+<td>Subscription documents between the two parties must be signed.</td>
+</tr>
+<tr>
+<td>Suitability</td>
+<td>Suitability documents that must be signed &amp; approved by the investor&#39;s advisor</td>
+</tr>
+<tr>
+<td>Escrow</td>
+<td>Money must go into escrow.</td>
+</tr>
+</tbody></table>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>param</th>
+<th>Relationship</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Templates</td>
+<td>template</td>
+<td>What templates belong to this category.</td>
+</tr>
+</tbody></table>
+<h3 id='process-template'>Process Template</h3>
+<p>A real-world sequence of events which take place around an investment.
+This stores information about a process that applies to all investments.</p>
+
+<p><strong>Relationships:</strong></p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Relationship</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Category</td>
+<td>What underlying category this process template applies to.</td>
+</tr>
+</tbody></table>
+<h3 id='process'>Process</h3>
+<p>A real-world sequence of events which take place around an investment.
+This stores information about a process that&#39;s specific to a particular
+investment.</p>
+<h3 id='task'>Task</h3>
+<p>An individual thing that must be done, either by a person, or by the system, in order for the process to advance. (Ex: Investor Signing the subscription documents).</p>
+<h3 id='notification'>Notification</h3>
+<p>An actual notice sent up to a user either informing them of where a process is at, or prompting them to do something to advance a process.</p>
+<h3 id='process-option'>Process Option</h3><h1 id='developer-reference'>Developer Reference</h1>
 <p>Here&#39;s a collection of things that are not well documented, and
 workaround we&#39;ll have to adopt in our current system for the time being.</p>
 <h2 id='using-the-right-serializer-amp-adapter'>Using the right serializer &amp; adapter</h2>
