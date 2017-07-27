@@ -118,6 +118,16 @@ Subscription | Subscription documents between the two parties must be signed.
 Suitability | Suitability documents that must be signed & approved by the investor's advisor
 Escrow | Money must go into escrow.
 
+These relationships can be requested as an include parameter:
+
+Name | param | Relationship
+---- | ----- | ------------
+Templates | template | What templates belong to this category.
+
+### Process Option
+Process options determine what processes an investment can do, for
+example, what accreditation services are currently available &
+integrated. These are defined at the deal level.
 
 Name | param | Relationship
 ---- | ----- | ------------
@@ -128,7 +138,11 @@ Templates | template | What templates belong to this category.
 A real-world sequence of events which take place around an investment.
 This stores information about a process that applies to all investments.
 
-**Relationships:**
+Name | Type | Description
+---- | ---- | -----------
+id | integer | Unique identifier for the object.
+
+These relationships can be requested as an include parameter:
 
 Name | Relationship
 ---- | ------------
@@ -145,4 +159,3 @@ An individual thing that must be done, either by a person, or by the system, in 
 ### Notification
 An actual notice sent up to a user either informing them of where a process is at, or prompting them to do something to advance a process.
 
-### Process Option
