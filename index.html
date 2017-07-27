@@ -249,6 +249,9 @@
                             <a href="#process-category" class="toc-h3 toc-link" data-title="Investments">Process Category</a>
                           </li>
                           <li>
+                            <a href="#process-option" class="toc-h3 toc-link" data-title="Investments">Process Option</a>
+                          </li>
+                          <li>
                             <a href="#process-template" class="toc-h3 toc-link" data-title="Investments">Process Template</a>
                           </li>
                           <li>
@@ -259,9 +262,6 @@
                           </li>
                           <li>
                             <a href="#notification" class="toc-h3 toc-link" data-title="Investments">Notification</a>
-                          </li>
-                          <li>
-                            <a href="#process-option" class="toc-h3 toc-link" data-title="Investments">Process Option</a>
                           </li>
                       </ul>
                   </li>
@@ -597,6 +597,26 @@ categories:</p>
 </tr>
 </tbody></table>
 
+<p>These relationships can be requested as an include parameter:</p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>param</th>
+<th>Relationship</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Templates</td>
+<td>template</td>
+<td>What templates belong to this category.</td>
+</tr>
+</tbody></table>
+<h3 id='process-option'>Process Option</h3>
+<p>Process options determine what processes an investment can do, for
+example, what accreditation services are currently available &amp;
+integrated. These are defined at the deal level.</p>
+
 <table><thead>
 <tr>
 <th>Name</th>
@@ -614,7 +634,21 @@ categories:</p>
 <p>A real-world sequence of events which take place around an investment.
 This stores information about a process that applies to all investments.</p>
 
-<p><strong>Relationships:</strong></p>
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>id</td>
+<td>integer</td>
+<td>Unique identifier for the object.</td>
+</tr>
+</tbody></table>
+
+<p>These relationships can be requested as an include parameter:</p>
 
 <table><thead>
 <tr>
@@ -635,7 +669,7 @@ investment.</p>
 <p>An individual thing that must be done, either by a person, or by the system, in order for the process to advance. (Ex: Investor Signing the subscription documents).</p>
 <h3 id='notification'>Notification</h3>
 <p>An actual notice sent up to a user either informing them of where a process is at, or prompting them to do something to advance a process.</p>
-<h3 id='process-option'>Process Option</h3><h1 id='developer-reference'>Developer Reference</h1>
+<h1 id='developer-reference'>Developer Reference</h1>
 <p>Here&#39;s a collection of things that are not well documented, and
 workaround we&#39;ll have to adopt in our current system for the time being.</p>
 <h2 id='using-the-right-serializer-amp-adapter'>Using the right serializer &amp; adapter</h2>
