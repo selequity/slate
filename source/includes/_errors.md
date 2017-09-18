@@ -2,13 +2,13 @@
 
 Selequity uses conventional HTTP response codes to indicate the success or failure of an API request. In general, codes in the 2xx range indicate success, codes in the 4xx range indicate an error that failed given the information provided (e.g., a required parameter was omitted, a charge failed, etc.), and codes in the 5xx range indicate an error with Selequity's servers (these are rare).
 
-Generally, responses will only contain one error, but in some cases
-(such as complex validations) there might be many errors. Generally, the
+Generally, responses will only contain one error. Generally, the
 HTTP response code will match the errors, but in cases where that's not
 true, we need to make sure to document them here.
 
 Error Code | Meaning
 ---------- | -------
+200 | Validation Errors | The request was good, but the data was bad.
 400 | Bad Request -- The request was unacceptable, often due to missing a required parameter.
 401 | Unauthorized -- No valid API key provided.
 402 | Request Failed -- The parameters were valid but the request failed.
