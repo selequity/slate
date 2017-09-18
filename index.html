@@ -313,8 +313,7 @@ in preparation for that point.</p>
 <h1 id='errors'>Errors</h1>
 <p>Selequity uses conventional HTTP response codes to indicate the success or failure of an API request. In general, codes in the 2xx range indicate success, codes in the 4xx range indicate an error that failed given the information provided (e.g., a required parameter was omitted, a charge failed, etc.), and codes in the 5xx range indicate an error with Selequity&#39;s servers (these are rare).</p>
 
-<p>Generally, responses will only contain one error, but in some cases
-(such as complex validations) there might be many errors. Generally, the
+<p>Generally, responses will only contain one error. Generally, the
 HTTP response code will match the errors, but in cases where that&#39;s not
 true, we need to make sure to document them here.</p>
 
@@ -324,6 +323,10 @@ true, we need to make sure to document them here.</p>
 <th>Meaning</th>
 </tr>
 </thead><tbody>
+<tr>
+<td>200</td>
+<td>Validation Errors</td>
+</tr>
 <tr>
 <td>400</td>
 <td>Bad Request -- The request was unacceptable, often due to missing a required parameter.</td>
